@@ -1,24 +1,28 @@
-import React from 'react';
 import { useState } from "react";
 
 
 export default function DropzoneField() {
     const [fileList, setFilelist] = useState<object[]>([]);
     const [error, setError] = useState<boolean>(false);
+    const [hover, setHover] = useState<boolean>(false);
 
     const dragOver = (e: any) => {
         e.preventDefault();
+        setHover(true);
     }
 
     const dragEnter = (e: any) => {
         e.preventDefault();
+        setHover(true);
     }
 
     const dragLeave = (e: any) => {
         e.preventDefault();
+        setHover(false);
     }
 
     const fileDrop = (e: any) => {
+        setHover(false);
         e.preventDefault();
         const files = e.dataTransfer.files;
         // console.log("files check -->", files)
@@ -60,6 +64,8 @@ export default function DropzoneField() {
                 }
                 <div className="container-dropzone">
                     <div className="drop-container"
+                        // style={ hover ? "#e6f1fb" : "white"}
+                        style={{ background: `${hover ? "#e6f1fb" : "white"}` }}
                         onDragOver={dragOver}
                         onDragEnter={dragEnter}
                         onDragLeave={dragLeave}
@@ -91,7 +97,6 @@ export default function DropzoneField() {
         .main-div{
           display: flex;
           flex-direction: column;
-          justify-content: center;
           align-items: center;
           height: 100vh;
         }
@@ -114,7 +119,7 @@ export default function DropzoneField() {
             margin-right: 1rem;
           }
           .container-dropzone{
-            margin-top: 1rem;
+            margin-top: 5rem;
             width: 20rem;
           }
           .drop-container{
@@ -126,9 +131,6 @@ export default function DropzoneField() {
             border: 2px dashed #4aa1f3;
             margin:0px;
             border-radius: 0.4rem;
-          }
-          .drop-container:hover {
-            background-color: #e6f1fb;
           }
           .del{
             cursor: pointer;
