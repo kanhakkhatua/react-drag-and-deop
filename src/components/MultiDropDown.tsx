@@ -26,15 +26,13 @@ const MultiDropDown = () => {
     },
   ];
 
-  const [fileList, setFilelist] = useState<object[]>(Arr);
+  const [state, setState] = useState([]) as any;
+  console.log("state", state);
 
-  const options = [
-    { label: 'Fruit', value: 'fruit' },
-    { label: 'Vegetable', value: 'vegetable' },
-    { label: 'Meat', value: 'meat' },
-  ];
 
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = useState('');
+  const [stateName, setStateName] = useState('');
+
 
   const handleChange = (event:any) => {
     const name = event.target.value
@@ -42,7 +40,18 @@ const MultiDropDown = () => {
 
     const result = Arr.filter(val => val.name === name);
 
-    console.log(result);
+    // console.log("result ",result[0].states);
+    setState(result[0].states);
+  };
+
+  const handleStateChange = (event:any) => {
+    const name = event.target.value
+    setStateName(name);
+
+    const result = Arr.filter(val => val.name === name);
+
+    console.log("result ",result[0].states);
+    // setState(result[0].states);
   };
 
   return (
@@ -57,8 +66,17 @@ const MultiDropDown = () => {
           ))}
         </select>
       </label>
+      <p>Country :  {value}</p>
 
-      <p>Country :  {value}!</p>
+      <label>
+        Choose State : 
+        <select value={stateName} onChange={handleStateChange}>
+          {state.map((state:any) => (
+            <option value={state.name}>{state.name}</option>
+          ))}
+        </select>
+      </label>
+      <p>State :  {value}</p>
     </div>
     <style>
         {
